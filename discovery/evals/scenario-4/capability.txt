@@ -1,0 +1,1 @@
+Call checklist generation marking which of 20 must-ask questions were covered in a partial transcript

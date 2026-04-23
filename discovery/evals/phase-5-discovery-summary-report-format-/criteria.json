@@ -1,0 +1,61 @@
+{
+  "context": "Tests whether the agent generates the correct Phase 5 summary report from pre-analyzed discovery data. The data represents a second (follow-up) call with a customer, so the report must include both the standard discovery summary AND the append-specific sections (new answers this call, updated scores). Six of the 14 technical environment fields were not discussed and must appear as 'Not discussed'.",
+  "type": "weighted_checklist",
+  "checklist": [
+    {
+      "name": "Maturity score format",
+      "max_score": 8,
+      "description": "The report includes the maturity score formatted as '<total>/24' (e.g. '17/24'). The numeric value must match the sum of the 8 provided dimension scores (2+2+3+2+3+2+1+2 = 17)."
+    },
+    {
+      "name": "Maturity band label",
+      "max_score": 8,
+      "description": "The report includes the correct maturity band label 'Medium' (since 17 falls in the 14-19 Medium range). Not 'High' or 'Low'."
+    },
+    {
+      "name": "Questions answered count",
+      "max_score": 8,
+      "description": "The report includes 'Questions Answered: 14 of 20' (or equivalent phrasing). The count must match the provided data (14 answered)."
+    },
+    {
+      "name": "Questions remaining count",
+      "max_score": 8,
+      "description": "The report includes 'Questions Remaining: 6 of 20' (or equivalent). The remaining count must be consistent with the total (20 - 14 = 6)."
+    },
+    {
+      "name": "All 14 tech env fields listed",
+      "max_score": 12,
+      "description": "The Technical Environment section of the report lists all 14 fields: SCM, Repo Structure, Primary Languages, Agent Harnesses / Tooling, Vendor Lock-in Concerns, Experimentation Attitude, Dedicated AEL Team Size, Overall Team Size, Agent User Roles, SSO Setup, Existing Repo Context, Tessl Feature Adoption, Skills Storage, AI Code Review Tooling. No fields omitted."
+    },
+    {
+      "name": "Not discussed fields shown correctly",
+      "max_score": 14,
+      "description": "Fields with no value in the provided data are rendered as 'Not discussed' (or 'Not discussed.') in the report. Specifically: Agent User Roles, SSO Setup, AI Code Review Tooling, Skills Storage, Vendor Lock-in Concerns, and Experimentation Attitude are not in the provided data and must show 'Not discussed' — not blank, not 'N/A', not omitted."
+    },
+    {
+      "name": "Data sources section present",
+      "max_score": 12,
+      "description": "The report includes a Data Sources section listing: Attio call recordings count (3), Granola meetings unique count (2), Granola duplicates dropped (1), Attio CRM record (Yes), and Attio notes count (4). All five values must be present."
+    },
+    {
+      "name": "Company and call metadata present",
+      "max_score": 8,
+      "description": "The report includes Company name ('Fintech Nexus'), Call number ('2' or 'Follow-up'), and call date ('2026-04-08' or equivalent). These must appear near the top of the report."
+    },
+    {
+      "name": "Sheet URL included",
+      "max_score": 8,
+      "description": "The report includes the Google Sheet URL provided in the input data: 'https://docs.google.com/spreadsheets/d/1Bx9TGKHLmzQdR7vP2Nw4fCaKJtYe8u5s/edit'. The URL must appear as the final link in the report."
+    },
+    {
+      "name": "New answers this call section",
+      "max_score": 7,
+      "description": "Because this is a follow-up (second call), the report includes a 'New answers this call' count. The value must be 5 (the number of newly answered questions from the input data: B3, C1, D2, D3, E1)."
+    },
+    {
+      "name": "Updated scores section",
+      "max_score": 7,
+      "description": "Because this is a follow-up call, the report includes an 'Updated scores' section listing dimensions whose scores changed from the first call. The input data indicates that 'Context Awareness' changed from 1 to 2 and 'Contribution Readiness' changed from 1 to 2. Both changes must be listed."
+    }
+  ]
+}

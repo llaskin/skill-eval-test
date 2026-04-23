@@ -1,0 +1,41 @@
+{
+  "context": "Tests whether the agent generates a correct openpyxl script that produces an 8-tab xlsx workbook matching the Discovery Questions Tracker template. The pre-analyzed data includes specific test points: a Medium maturity band (yellow fill), a RED FLAG assessment in Section C (red fill), and two 'No' entries in the checklist (red fill). The agent must correctly implement all styling, tab ordering, and conditional color coding.",
+  "type": "weighted_checklist",
+  "checklist": [
+    {
+      "name": "Exactly 8 tabs in correct order",
+      "description": "The workbook contains exactly 8 sheets named: 'Maturity Qualification', 'Section A', 'Section B', 'Section C', 'Section D', 'Section E', 'Section F', 'Call Checklist'. Tabs are in this exact order. Missing tabs, extra tabs, or wrong ordering is incorrect. Tab names must match (not 'Tab 1', 'Sheet1', etc.).",
+      "max_score": 20
+    },
+    {
+      "name": "Maturity tab total row has Medium (yellow) fill",
+      "description": "The total score row on the Maturity Qualification tab uses yellow fill (#FEFCBF or close equivalent) because the total score is 16, which falls in the Medium band (14-19). Using green (High) or red (Low) fill is incorrect. The total row must display both the numeric score (16) and the band label ('Medium').",
+      "max_score": 15
+    },
+    {
+      "name": "Section tab assessment column uses conditional fills",
+      "description": "Assessment cells in Section tabs A-F use conditional background fills: GOOD cells get green (#C6F6D5), CAUTION cells get yellow (#FEFCBF), RED FLAG cells get red (#FED7D7), N/A cells get gray (#D9D9D9). Specifically, C1's assessment cell (RED FLAG) must have red fill, and B3's assessment cell (N/A) must have gray fill. At minimum these two must be correct.",
+      "max_score": 20
+    },
+    {
+      "name": "Checklist Asked? column uses conditional fills",
+      "description": "The Asked? column on the Call Checklist tab uses conditional fills: Yes → green (#C6F6D5), Partial → yellow (#FEFCBF), No → red (#FED7D7). The two 'No' entries (B3 and C4) must have red fills. All 'Yes' entries must have green fills.",
+      "max_score": 15
+    },
+    {
+      "name": "Header styling applied globally",
+      "description": "All header rows across all 8 tabs have dark slate background (#2D3748 or close equivalent) with white bold text. Data cells use font color #1A202C (dark text). The script must set these styles explicitly, not rely on defaults.",
+      "max_score": 10
+    },
+    {
+      "name": "Column layouts match specification",
+      "description": "Maturity tab has 4 columns (Dimension, Score, Evidence, Notes). Section tabs have 11 columns (#, Question, Why It Matters, Customer Answer, Good Answer, Caution Answer, Red Flag Answer, Assessment, Follow-Up Used/Needed, Notes, Source). Checklist tab has 4 columns (Category, Must-Ask Question, Asked?, Key Takeaway). Column counts must be exact.",
+      "max_score": 10
+    },
+    {
+      "name": "Script is runnable Python using openpyxl",
+      "description": "The output is a valid Python script that imports openpyxl, creates the workbook programmatically, and saves to /tmp/Meridian-Aerospace-discovery.xlsx. The script must be syntactically valid and use openpyxl APIs correctly (PatternFill, Font, Alignment, Border, Side, etc.). It should not require manual data entry or external file dependencies beyond the embedded data.",
+      "max_score": 10
+    }
+  ]
+}

@@ -1,0 +1,36 @@
+{
+  "context": "Tests whether the agent correctly audits a partial transcript against the full 20-question checklist, accurately distinguishing between Yes (fully asked and answered), Partial (tangentially touched), and No (not discussed). The transcript is deliberately incomplete — a realistic first call that ran short on time — to test that the agent does not hallucinate coverage for questions that were never discussed.",
+  "type": "weighted_checklist",
+  "checklist": [
+    {
+      "name": "Exactly 20 checklist entries",
+      "description": "The output contains exactly 20 entries matching the 20 must-ask questions. No questions are added (F2 should NOT appear), no questions are missing, and no questions are duplicated.",
+      "max_score": 10
+    },
+    {
+      "name": "B3, B4, C2, C4 marked No",
+      "description": "Questions B3 (updating/versioning standards), B4 (sharing patterns/templates), C2 (tool evaluation process), and C4 (identifying AI gaps) are all marked 'No'. These topics are completely absent from the transcript. Marking any of them 'Yes' or 'Partial' is a hallucination error.",
+      "max_score": 25
+    },
+    {
+      "name": "E1, E2, E3 marked No",
+      "description": "All three POC Scoping questions — E1 (success definition), E2 (ideal POC team), E3 (evaluation timeline) — are marked 'No'. The call ran out of time before reaching these topics. Leo explicitly says 'We should schedule a follow-up to dig deeper' which confirms these were not covered.",
+      "max_score": 20
+    },
+    {
+      "name": "A1-A4 and A-extra marked Yes",
+      "description": "All five Context Today questions are marked 'Yes'. The transcript contains direct questions and substantive answers for: codebase context-finding (A1), AI tools in use (A2), developer satisfaction (A3 — survey data provided even if informal), onboarding time (A4), and org size/structure (A-extra). A3 may reasonably be 'Partial' given the informal nature of the survey, but the other four should be 'Yes'.",
+      "max_score": 15
+    },
+    {
+      "name": "Key takeaways are specific not generic",
+      "description": "Key takeaways for 'Yes' questions contain specific details from the transcript, not generic summaries. For example, A4's takeaway should mention '8-9 months for route optimization' or '5 months average', not just 'Onboarding takes a long time'. At least 5 of the Yes/Partial takeaways must include a specific number, team name, or tool name from the transcript.",
+      "max_score": 15
+    },
+    {
+      "name": "Summary counts are accurate",
+      "description": "The summary.total_asked + summary.total_partial + summary.total_not_covered equals 20. The individual counts are consistent with the checklist entries (every 'Yes' counted in total_asked, every 'Partial' in total_partial, every 'No' in total_not_covered). Coverage percentage is calculated correctly as (total_asked + total_partial) / 20 * 100 or total_asked / 20 * 100 — either formula is acceptable as long as it is applied consistently.",
+      "max_score": 15
+    }
+  ]
+}

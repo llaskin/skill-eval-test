@@ -1,0 +1,56 @@
+{
+  "context": "Tests whether the agent creates a NEW Attio note titled '<Company> — Discovery Update (Call 2)' for a follow-up call rather than overwriting or re-using the original 'Discovery Summary' note title. The input provides a pre-existing first-call note title and new second-call analysis data. The note must also follow correct formatting rules (==highlight==, *italic*, no tables/code) and include follow-up-specific content sections.",
+  "type": "weighted_checklist",
+  "checklist": [
+    {
+      "name": "Title uses Update format",
+      "max_score": 20,
+      "description": "The note title is 'Meridian Logistics — Discovery Update (Call 2)' (or very close variant with the company name, 'Update', and call number). A title of 'Discovery Summary' or any variant without 'Update' and the call number fails this check."
+    },
+    {
+      "name": "Title does NOT say Discovery Summary",
+      "max_score": 15,
+      "description": "The note title does NOT contain 'Discovery Summary' — that was the first-call note title. Using 'Discovery Summary' (even with the company name) indicates the agent edited the original instead of creating a new note."
+    },
+    {
+      "name": "Call number in title",
+      "max_score": 10,
+      "description": "The note title explicitly includes the call number '2' (e.g., 'Call 2'). A title saying only 'Discovery Update' without specifying which call number is incomplete."
+    },
+    {
+      "name": "No tables or code blocks",
+      "max_score": 8,
+      "description": "The note body does NOT contain any markdown table syntax (pipe characters forming rows) or code block syntax (triple backticks). All content uses heading, list, and inline markdown."
+    },
+    {
+      "name": "Updated maturity score highlighted",
+      "max_score": 8,
+      "description": "The updated maturity total score (19/24) is wrapped in ==highlight== syntax in the note body. The new total must reflect the changed dimension scores."
+    },
+    {
+      "name": "Not-discussed fields italicized",
+      "max_score": 8,
+      "description": "Tech env fields that remain unconfirmed or not discussed (Agent User Roles, AI Code Review Tooling) are rendered with *italic* formatting on their value (e.g., '*Not discussed*'). Fields that are known must not be italicized."
+    },
+    {
+      "name": "New answers noted",
+      "max_score": 10,
+      "description": "The note body identifies which questions were newly answered in this second call. The three newly covered questions (E1, E2, D2) or their topics are mentioned as new information from this call."
+    },
+    {
+      "name": "Updated dimension score noted",
+      "max_score": 8,
+      "description": "The note explicitly shows that Knowledge Distribution Pain score changed (from 2 to 3), either in a dedicated 'Updated scores' section or within the Maturity Dimensions listing."
+    },
+    {
+      "name": "Open questions reflect remaining gaps",
+      "max_score": 8,
+      "description": "The Open Questions section lists questions not yet answered as of Call 2 — it must NOT include E1 or E2 (newly answered in Call 2). It should list only questions that remain unanswered after both calls."
+    },
+    {
+      "name": "Discovery sheet link present",
+      "max_score": 5,
+      "description": "The note includes the Google Sheets URL https://docs.google.com/spreadsheets/d/1NpQrStUvWxYzAbCdEfGhIJ/edit as a clickable markdown link."
+    }
+  ]
+}

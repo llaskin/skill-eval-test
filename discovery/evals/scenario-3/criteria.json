@@ -1,0 +1,41 @@
+{
+  "context": "Tests whether the agent correctly implements the three-condition deduplication logic with Attio as primary source. The input contains 5 tricky cases: 2 true duplicates, 1 same-date non-duplicate (different attendee domains AND no keyword match), and 2 Granola-only calls. The hardest case is grn-mtg-104, which shares a date with att-rec-004 but is a genuinely different meeting (internal prep vs customer budget review).",
+  "type": "weighted_checklist",
+  "checklist": [
+    {
+      "name": "grn-mtg-101 correctly dropped as duplicate",
+      "description": "The Jan 15 Granola 'Discovery call - Quantum Dynamics' (grn-mtg-101) is identified as a duplicate of att-rec-001 and discarded. Both share the date 2026-01-15, overlapping quantumdyn.com domain, and the keyword 'discovery'. The Attio version must be kept.",
+      "max_score": 15
+    },
+    {
+      "name": "grn-mtg-103 correctly dropped as duplicate",
+      "description": "The Feb 5 Granola 'QD follow-up discussion' (grn-mtg-103) is identified as a duplicate of att-rec-003 despite a different title format. Both share date 2026-02-05, overlapping quantumdyn.com attendee domain, and the keyword 'follow-up' appears in both titles. The Attio version must be kept.",
+      "max_score": 15
+    },
+    {
+      "name": "grn-mtg-104 correctly kept as unique",
+      "description": "The Feb 12 Granola 'Internal prep - Quantum Dynamics pricing' (grn-mtg-104) is NOT dropped despite sharing a date with att-rec-004 ('Budget Review'). The attendees are all @tessl.io (no @quantumdyn.com domain overlap) AND the title has no shared keyword with 'Budget Review'. This is the critical false-positive test — incorrectly dropping this as a duplicate is a significant error.",
+      "max_score": 25
+    },
+    {
+      "name": "Merged list has exactly 7 calls",
+      "description": "The final merged_calls list contains exactly 7 entries: 4 from Attio (att-rec-001 through att-rec-004) plus 3 from Granola (grn-mtg-102, grn-mtg-104, grn-mtg-105). Having 6 (over-deduplication) or 8+ (under-deduplication) is incorrect.",
+      "max_score": 15
+    },
+    {
+      "name": "Chronological sort oldest-first",
+      "description": "The merged list is sorted by date ascending (Jan 15 first, Feb 19 last). Calls on the same date (Feb 12 has two) should appear in a stable order.",
+      "max_score": 10
+    },
+    {
+      "name": "Dedup log counts correct",
+      "description": "The dedup_log.json contains: attio_call_count=4, granola_total_count=5, granola_unique_count=3, granola_duplicates_dropped=2, merged_total=7. All five values must be correct.",
+      "max_score": 10
+    },
+    {
+      "name": "Source attribution on each call",
+      "description": "Each call in the merged list has a 'source' field set to either 'attio' or 'granola'. Attio calls are marked 'attio'. Granola-unique calls are marked 'granola'. Duplicate-dropped calls have duplicate_detected=true on the Attio entry that superseded them.",
+      "max_score": 10
+    }
+  ]
+}

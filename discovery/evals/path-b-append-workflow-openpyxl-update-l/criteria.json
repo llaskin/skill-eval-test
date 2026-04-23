@@ -1,0 +1,36 @@
+{
+  "context": "Tests whether the agent correctly implements the follow-up call update logic using openpyxl: replacing 'Not discussed in this call' placeholder cells with answers from the new transcript, updating maturity scores where new evidence warrants a change, updating the call checklist for newly covered questions, and inserting an 'Updated: Call N | date | attendees' banner row at the top of the Maturity Qualification tab. The scenario provides a base xlsx (via a generator script) and a follow-up transcript with targeted new information.",
+  "type": "weighted_checklist",
+  "checklist": [
+    {
+      "name": "Updated banner row inserted",
+      "max_score": 22,
+      "description": "A new row has been inserted at the very top of the Maturity Qualification tab (row 1, above the header) with content matching the pattern 'Updated: Call 2 | 2026-04-14 | [attendee names]'. The original header row must be pushed down — not replaced. The date must be 2026-04-14 (the new call date)."
+    },
+    {
+      "name": "Not-discussed cells replaced",
+      "max_score": 20,
+      "description": "Cells that previously contained exactly 'Not discussed in this call' in the Customer Answer column have been replaced with answers extracted from the new transcript. Specifically: Section B Question 4 (B4) must now contain a non-placeholder answer about developer standards sharing, and Section D Question 1 (D1) must now contain a non-placeholder answer about the decision maker."
+    },
+    {
+      "name": "Maturity score updated",
+      "max_score": 18,
+      "description": "The Knowledge Distribution Pain dimension score has been updated from 2 to 3 in the Maturity Qualification tab. The new score of 3 must appear in the Score cell for that dimension. The total score row must also reflect the updated sum (should now be 17 instead of 16)."
+    },
+    {
+      "name": "Checklist updated for covered questions",
+      "max_score": 15,
+      "description": "In the Call Checklist tab, the Asked? value for B4 (sharing standards and templates) has been updated from 'No' to 'Yes', and D1 (decision maker) has been updated from 'No' to 'Yes'. The Key Takeaway cells for these entries must also be updated with a non-empty summary from the new call."
+    },
+    {
+      "name": "Existing data preserved",
+      "max_score": 15,
+      "description": "All other cells in the workbook that did NOT need updating remain unchanged. In particular: the existing Customer Answer cells for A1-A4, B1-B3, C1-C4, and F1-F2 must retain their original content from the base xlsx. No previously populated cells should have been cleared or replaced with placeholders."
+    },
+    {
+      "name": "openpyxl load-and-modify approach",
+      "max_score": 10,
+      "description": "The update script uses openpyxl to LOAD the existing xlsx file (using openpyxl.load_workbook) and modifies it in place, rather than rebuilding the entire workbook from scratch. The script must call load_workbook(), not Workbook()."
+    }
+  ]
+}

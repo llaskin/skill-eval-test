@@ -1,0 +1,41 @@
+{
+  "context": "Tests whether the agent correctly applies source attribution and source-priority rules when the same discovery topic appears in both Attio and Granola call transcripts. The merged call data has 2 Attio calls and 1 unique Granola call. Several topics are discussed in both an Attio call and the Granola call; the agent must use the Attio version as the primary customer answer and note Granola context as supplementary. One topic (SSO setup) appears only in the Granola call. The output must use [Source, YYYY-MM-DD] citation format throughout.",
+  "type": "weighted_checklist",
+  "checklist": [
+    {
+      "name": "Attio citation format",
+      "max_score": 12,
+      "description": "Attio evidence citations use the format [Attio, YYYY-MM-DD] (e.g., '[Attio, 2026-02-14]'). At least 3 customer answer entries must contain an Attio citation in this exact bracket format. Formats like 'Attio (Feb 14)' or 'source: Attio' do not satisfy this criterion."
+    },
+    {
+      "name": "Granola citation format",
+      "max_score": 10,
+      "description": "Granola evidence citations use the format [Granola, YYYY-MM-DD] (e.g., '[Granola, 2026-02-28]'). At least 1 customer answer entry must contain a Granola citation in this bracket format."
+    },
+    {
+      "name": "Attio primary for overlapping topics",
+      "max_score": 20,
+      "description": "For the AI tools topic (A2) and team size topic, which appear in BOTH an Attio call and the Granola call, the primary customer answer text draws from the Attio transcript (quotes or details matching the Attio version), not primarily from the Granola transcript."
+    },
+    {
+      "name": "Granola context noted as supplementary",
+      "max_score": 18,
+      "description": "For questions covered in both Attio and Granola, the Granola call's information is noted as additional or supplementary context — it appears as a secondary note, not as the lead answer. The phrase 'supplementary', 'additional context', or a secondary attribution like 'also mentioned in [Granola, ...]' must appear for at least one overlapping topic."
+    },
+    {
+      "name": "Granola-only topic attributed correctly",
+      "max_score": 15,
+      "description": "The SSO Setup question (only mentioned in the Granola call, never in either Attio call) has its answer attributed to [Granola, 2026-02-28]. It must NOT be attributed to Attio, and must NOT be marked 'Not discussed'."
+    },
+    {
+      "name": "Multi-source entries combine attributions",
+      "max_score": 13,
+      "description": "At least one customer answer entry contains citations from more than one source (both an Attio date and a Granola date), showing the combined evidence across calls. A single-source answer for a topic confirmed in both Attio and Granola is incomplete."
+    },
+    {
+      "name": "No fabricated source dates",
+      "max_score": 12,
+      "description": "All source dates in citations match one of the three call dates in the input: 2026-02-14 (Attio), 2026-03-07 (Attio), or 2026-02-28 (Granola). Citations with any other date are fabricated and fail this check."
+    }
+  ]
+}

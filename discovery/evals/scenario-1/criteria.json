@@ -1,0 +1,46 @@
+{
+  "context": "Tests whether the agent correctly scores all 8 maturity dimensions from transcript excerpts, extracts verbatim evidence, and computes the correct total band. The transcript is designed so that most dimensions score 2-3 except Knowledge Distribution Pain (strong pain = 3) and Internal Knowledge Surface (weak practices = 1-2), yielding a Medium-to-High total.",
+  "type": "weighted_checklist",
+  "checklist": [
+    {
+      "name": "All 8 dimensions scored",
+      "description": "Every one of the 8 dimensions (AI Tooling Landscape, Context Awareness, Internal Knowledge Surface, Knowledge Distribution Pain, Quality Measurement, Platform/DevEx Ownership, Scale of Developer Base, Contribution Readiness) has a score of 1, 2, or 3. No dimension is skipped or scored outside the 1-3 range.",
+      "max_score": 15
+    },
+    {
+      "name": "Platform/DevEx scores 3",
+      "description": "Platform / DevEx Ownership is scored 3 (High). The transcript clearly describes a 12-person dedicated team with executive sponsorship, formal intake, quarterly surveys, NPS of 42, and well-maintained internal tooling. Scoring this anything less than 3 is incorrect.",
+      "max_score": 15
+    },
+    {
+      "name": "Internal Knowledge Surface scores 1 or 2",
+      "description": "Internal Knowledge Surface is scored 1 or 2 (Low or Medium). The transcript describes outdated Confluence (30% current runbooks), buried Slack knowledge, 40% ADR compliance, and no effective search. This should not be a 3.",
+      "max_score": 15
+    },
+    {
+      "name": "Knowledge Distribution Pain scores 2 or 3",
+      "description": "Knowledge Distribution Pain is scored 2 or 3, reflecting the severe pain signals: 35% velocity drop from one departure, 12 single-point-of-failure engineers, ad hoc transfer processes, deprioritized knowledge sprints. High pain = high fit for Tessl.",
+      "max_score": 10
+    },
+    {
+      "name": "Verbatim evidence for each dimension",
+      "description": "Each dimension includes at least one verbatim quote from the transcript (not paraphrased). For example, Platform/DevEx evidence must include actual words like 'CTO considers DevEx a strategic priority' or '12-person platform engineering team', not just a summary.",
+      "max_score": 20
+    },
+    {
+      "name": "Source attribution present",
+      "description": "Evidence entries include source attribution in the format '[Attio, 2026-02-18]' matching the transcript source. Attribution must not be fabricated or generic.",
+      "max_score": 5
+    },
+    {
+      "name": "Total score computed correctly",
+      "description": "The total_score field equals the arithmetic sum of all 8 individual dimension scores. No off-by-one errors or miscalculations.",
+      "max_score": 10
+    },
+    {
+      "name": "Maturity band matches total",
+      "description": "The maturity_band is correctly derived from the total score using the specified bands: 20-24 = High, 14-19 = Medium, 8-13 = Low. The band must match the computed total.",
+      "max_score": 10
+    }
+  ]
+}

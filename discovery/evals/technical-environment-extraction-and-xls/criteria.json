@@ -1,0 +1,46 @@
+{
+  "context": "Tests whether the agent correctly extracts all 14 technical environment fields from a call transcript and generates an openpyxl script that produces a Technical Environment sheet with the correct 4-column structure, conditional cell fills (#DBEAFE for populated fields, #F3F4F6 for blank/unknown), and global header styling. The transcript contains data for 10 of the 14 fields; Agent User Roles, SSO Setup, AI Code Review Tooling, and Skills Storage were not discussed and should have blank/gray cells.",
+  "type": "weighted_checklist",
+  "checklist": [
+    {
+      "name": "All 14 fields present",
+      "max_score": 12,
+      "description": "The output contains exactly 14 rows corresponding to the required fields: SCM, Repo Structure, Primary Languages, Agent Harnesses / Tooling, Vendor Lock-in Concerns, Experimentation Attitude, Dedicated AEL Team Size, Overall Team Size, Agent User Roles, SSO Setup, Existing Repo Context, Tessl Feature Adoption, Skills Storage, AI Code Review Tooling. No fields omitted, no extra fields added."
+    },
+    {
+      "name": "Correct 4-column structure",
+      "max_score": 10,
+      "description": "The Technical Environment sheet has exactly 4 columns: Field, Value, Evidence, Notes. Column names must match these labels."
+    },
+    {
+      "name": "Value cells blue fill",
+      "max_score": 18,
+      "description": "Cells in the Value column that contain data (non-empty, non-blank answers) are filled with light blue (#DBEAFE or closest openpyxl PatternFill equivalent). At minimum the SCM (GitHub Enterprise), Primary Languages (Python, Go, TypeScript), and Agent Harnesses rows must have blue fills on their Value cells."
+    },
+    {
+      "name": "Blank/unknown cells gray fill",
+      "max_score": 18,
+      "description": "Cells in the Value column that are blank or contain no data are filled with light gray (#F3F4F6 or closest equivalent). Specifically, the four fields not covered in the transcript — Agent User Roles, SSO Setup, AI Code Review Tooling, and Skills Storage — must have gray fills on their Value cells, not white or blue."
+    },
+    {
+      "name": "Header row dark slate styling",
+      "max_score": 10,
+      "description": "The header row uses a dark slate background fill (#2D3748 or close equivalent) with white bold text. The header must not use default/no styling."
+    },
+    {
+      "name": "Correct field values extracted",
+      "max_score": 15,
+      "description": "The extracted values match the transcript content. Specifically: SCM = GitHub Enterprise (or 'GitHub Enterprise + github.com'), Primary Languages includes Python and Go (TypeScript also acceptable), Agent Harnesses includes Claude Code and Cursor, Overall Team Size is approximately 300, Dedicated AEL Team Size is 18 engineers."
+    },
+    {
+      "name": "Evidence includes source attribution",
+      "max_score": 10,
+      "description": "The Evidence column entries include source attribution in the format '[Attio, YYYY-MM-DD]' matching the transcript source date (2026-03-12). At least 5 evidence entries must include this attribution format — not just verbatim quotes without a source tag."
+    },
+    {
+      "name": "openpyxl used in Python script",
+      "max_score": 7,
+      "description": "The Python script uses openpyxl (imports openpyxl or uses 'from openpyxl import ...'). The script must not use xlsxwriter, pandas ExcelWriter, or other xlsx libraries. The script must save the file to a /tmp path or local path."
+    }
+  ]
+}

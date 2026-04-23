@@ -1,0 +1,41 @@
+{
+  "context": "Tests whether the agent correctly extracts customer answers from a transcript for all questions in Sections A-F, assigns accurate Good/Caution/Red Flag assessments, and identifies appropriate follow-ups. The transcript intentionally leaves no questions fully unanswered (all A-F are covered) but some have concerning signals that should be flagged.",
+  "type": "weighted_checklist",
+  "checklist": [
+    {
+      "name": "All 20 questions populated",
+      "description": "Every question from A1-A4, B1-B4, C1-C4, D1-D3, E1-E3, F1-F2 has an entry in the output. No questions are skipped. Customer answers include verbatim quotes (not just paraphrases) for questions that were discussed.",
+      "max_score": 20
+    },
+    {
+      "name": "B3 flagged as Caution or Red Flag",
+      "description": "Question B3 (formal process for updating standards) is assessed as CAUTION or RED FLAG. Jason explicitly says 'Not really' and describes no versioning system, no adoption tracking, and it 'keeps slipping'. Assessing this as GOOD would be incorrect.",
+      "max_score": 15
+    },
+    {
+      "name": "D3 assessed as GOOD",
+      "description": "Question D3 (allocated budget for AI tooling) is assessed as GOOD. The transcript explicitly states $400K earmarked, $220K remaining and specifically allocated for 'next-generation developer context and quality tooling'. This is a strong positive budget signal.",
+      "max_score": 15
+    },
+    {
+      "name": "F1 captures all three alternatives",
+      "description": "Question F1 (other solutions evaluated) must mention all three alternatives discussed: (1) Sourcegraph Cody — evaluated and rejected, (2) Tabnine — currently in conversations, (3) in-house RAG build — considered but no bandwidth. Missing any of the three is incomplete extraction.",
+      "max_score": 15
+    },
+    {
+      "name": "C1 reflects compliance risk",
+      "description": "Question C1 (measuring AI-generated code quality) must capture the compliance/safety dimension. The transcript contains a near-miss PHI exposure incident from Copilot and an explicit statement that they have no way to distinguish AI-generated code. Assessment should be CAUTION or RED FLAG, not GOOD.",
+      "max_score": 15
+    },
+    {
+      "name": "E2 identifies specific POC team",
+      "description": "Question E2 (ideal POC team) answer must identify the claims processing team by name, include the team size (35 engineers), and ideally mention the champion (Maria Santos). Generic answers like 'a mid-size team' miss the specificity provided in the transcript.",
+      "max_score": 10
+    },
+    {
+      "name": "Follow-ups identified for weak areas",
+      "description": "At least 3 questions with CAUTION or RED FLAG assessments have a non-null follow_up_needed field containing a relevant follow-up question. For example, B3 (standards versioning) and C1 (AI quality measurement) should have follow-up suggestions. Questions assessed as GOOD may have null follow-ups.",
+      "max_score": 10
+    }
+  ]
+}

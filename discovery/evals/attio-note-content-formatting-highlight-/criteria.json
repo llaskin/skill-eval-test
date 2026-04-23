@@ -1,0 +1,61 @@
+{
+  "context": "Tests whether the agent generates Attio note content that follows the discovery skill's formatting rules: no tables or code blocks, ==highlight== for maturity score and assessments, *italic* for not-discussed tech env values, one-line evidence summaries, 3-5 highlights prioritizing GOOD/RED FLAG over CAUTION, and up to 5 open questions. The provided analysis data has 14 of 20 questions answered, 6 unanswered, 18/24 maturity (Medium), and 4 technical env fields not discussed.",
+  "type": "weighted_checklist",
+  "checklist": [
+    {
+      "name": "No tables in note",
+      "max_score": 10,
+      "description": "The note content does NOT contain any markdown table syntax (pipes '|' forming table rows, or '---' separator rows). All structured data is presented as bullet lists or numbered lists, not as tables."
+    },
+    {
+      "name": "No code blocks in note",
+      "max_score": 8,
+      "description": "The note content does NOT contain any code block syntax (triple backticks ``` or indented code blocks). All content is plain markdown prose or lists."
+    },
+    {
+      "name": "Maturity score highlighted",
+      "max_score": 12,
+      "description": "The maturity total score is wrapped in ==highlight== syntax (e.g., ==18/24== or ==18/24 (Medium maturity)==). The == markers must appear around the score value, not just in regular bold or plain text."
+    },
+    {
+      "name": "Maturity band highlighted",
+      "max_score": 8,
+      "description": "The maturity band label 'Medium' is wrapped in ==highlight== syntax somewhere in the note (e.g., ==Medium== or ==Medium maturity==). The band label must appear highlighted, not just as plain text."
+    },
+    {
+      "name": "Assessment ratings highlighted",
+      "max_score": 10,
+      "description": "At least two assessment ratings in the Highlights section use ==highlight== syntax (e.g., ==GOOD==, ==RED FLAG==, or ==CAUTION==). Ratings written as plain text without == markers do not satisfy this criterion."
+    },
+    {
+      "name": "Not-discussed fields italicized",
+      "max_score": 10,
+      "description": "The four tech env fields not covered in the call (SSO Setup, Agent User Roles, Skills Storage, AI Code Review Tooling) are rendered with *italic* formatting on their value (e.g., '*Not discussed*' or '*Not mentioned*'). Fields that ARE known must NOT be italicized."
+    },
+    {
+      "name": "Evidence summaries single-line",
+      "max_score": 8,
+      "description": "Each dimension's evidence summary in the Maturity Dimensions section is a single line (no multi-sentence paragraphs). A summary that runs to two or more sentences for any dimension fails this check."
+    },
+    {
+      "name": "Highlights count in range",
+      "max_score": 10,
+      "description": "The Highlights section contains between 3 and 5 items (inclusive). Fewer than 3 or more than 5 highlights fails this check."
+    },
+    {
+      "name": "RED FLAG in highlights",
+      "max_score": 12,
+      "description": "The Highlights section includes at least one RED FLAG assessment (B3 — no versioning/update process for standards). The input data contains a clear RED FLAG that must be prioritized over CAUTION items in the highlights selection."
+    },
+    {
+      "name": "Open questions count",
+      "max_score": 8,
+      "description": "The Open Questions section lists between 1 and 5 items. Because 6 must-ask questions were not covered in the call, the note should list up to 5 of them — it must NOT list all 6 or leave the section empty."
+    },
+    {
+      "name": "Discovery sheet link present",
+      "max_score": 4,
+      "description": "The note includes the Google Sheets URL https://docs.google.com/spreadsheets/d/1Kz9aBcD3efGhIJKlMnOpQrStUvWxYz/edit as a clickable markdown link near the top of the note (e.g., '[View full Discovery Sheet](...)' or similar)."
+    }
+  ]
+}

@@ -1,0 +1,16 @@
+name: Tessl Skill Eval
+on:
+  pull_request:
+    paths: ['**/SKILL.md', '**/evals/**']
+
+jobs:
+  eval:
+    runs-on: ubuntu-latest
+    permissions:
+      pull-requests: write
+      contents: read
+    steps:
+      - uses: actions/checkout@v4
+      - uses: tesslio/skill-eval@feat/skill-eval
+        with:
+          fail-threshold: 70
