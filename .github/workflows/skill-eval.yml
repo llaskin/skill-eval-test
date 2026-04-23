@@ -15,4 +15,5 @@ jobs:
       - uses: tesslio/skill-eval@feat/skill-eval
         with:
           eval-fail-on-regression: true
+          eval-generate-scenarios: true
           tessl-token: ${{ secrets.TESSL_TOKEN }}
