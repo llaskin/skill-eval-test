@@ -16,4 +16,4 @@ jobs:
         with:
           eval-workspace: tessl-leo
           eval-fail-on-regression: true
-          tessl-api-key: ${{ secrets.TESSL_API_KEY }}
+          tessl-token: ${{ secrets.TESSL_TOKEN }}
