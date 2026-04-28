@@ -1,6 +1,6 @@
 ---
 name: discovery
-description: Analyzes discovery call transcripts from Attio (primary) and Granola (secondary) against the Discovery Questions Tracker template, creates or appends to a Google Sheet in the Discovery folder with full scoring, customer answers, and evidence, and posts a summary note to the Attio company record. Outputs an xlsx with tabs matching the original spreadsheet template. Use when the user wants to process a discovery call, fill out discovery questions, create a discovery doc, or run /discovery.
+description: Analyze discovery call transcripts from Attio (primary) and Granola (secondary) against the Discovery Questions Tracker template, creates or appends to a Google Sheet in the Discovery folder with full scoring, customer answers, and evidence, and posts a summary note to the Attio company record. Outputs an xlsx with tabs matching the original spreadsheet template. Use when the user wants to process a discovery call, fill out discovery questions, create a discovery doc, or run /discovery.
 license: MIT
 metadata:
   version: 0.4.0
