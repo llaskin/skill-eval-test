@@ -1,0 +1,11 @@
+{
+  "name": "tessl-leo/weekly-review",
+  "version": "0.1.0",
+  "summary": "Analyzes meeting transcripts from Granola and Attio to generate weekly pros/cons reports with full attribution.",
+  "private": true,
+  "skills": {
+    "weekly-review": {
+      "path": "SKILL.md"
+    }
+  }
+}
